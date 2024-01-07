@@ -6,11 +6,9 @@ spring:
     password: 1234
 
   jpa:
-    # JPA? ???? SQL? ? ? ??.
     show-sql: true
     hibernate:
       ddl-auto: create
-      dialect: org.hibernate.dialect.H2Dialect
   # ?? ?? ? ?? always
   output:
     ansi:
@@ -18,7 +16,7 @@ spring:
 # ???? ??? ?? trace
 logging:
   level:
-    org.hibernate.type: trace
+    '[org.hibernate.type]': trace
 springdoc:
   swagger-ui:
     # swagger-ui ?? ??. default ?? /swagger-ui.html??.

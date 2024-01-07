@@ -4,13 +4,15 @@ import com.example.todolisttest.dto.TodoCreateDto;
 import com.example.todolisttest.dto.TodoUpdateDto;
 import com.example.todolisttest.entity.Todo;
 import com.example.todolisttest.service.TodoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/api/todos")
 public class TodoController {
 
@@ -21,7 +23,7 @@ public class TodoController {
     }
 
     @PostMapping("/items")
-    public ResponseEntity<Todo> addTodo(@RequestBody TodoCreateDto todoCreateDto) {
+    public ResponseEntity<Todo> addTodo(@Valid @RequestBody TodoCreateDto todoCreateDto) {
         Todo newTodo = todoService.addTodo(todoCreateDto);
         return ResponseEntity.ok(newTodo);
     }
@@ -33,14 +35,14 @@ public class TodoController {
     }
 
     @PutMapping("/items/{id}")
-    public ResponseEntity<Todo> updateTodoName(@PathVariable Long id, @RequestBody TodoUpdateDto todoUpdateDto) {
+    public ResponseEntity<Todo> updateTodoName(@PathVariable Long id, @Valid @RequestBody TodoUpdateDto todoUpdateDto) {
         todoUpdateDto.setId(id);
         Todo updatedTodo = todoService.updateTodoName(todoUpdateDto);
         return ResponseEntity.ok(updatedTodo);
     }
 
     @DeleteMapping("/items/{id}")
-    public ResponseEntity<?> deleteTodo(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteTodo(@PathVariable Long id) {
         todoService.deleteTodo(id);
         return ResponseEntity.ok().build();
     }
